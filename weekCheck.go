@@ -24,24 +24,30 @@ var (
 )
 
 func main() {
-	message = "massanのへっぽこbotからお送りします" + "\n" + setDayInfo() + "\n" + messageContent() + "...(σ･∀･)σゲッツ!!"
-	postMessage()
-	// fmt.Println(message)
+	message = createMessage()
+	// postMessage()
+	fmt.Println(message)
+
 }
 
-func setWeekday() string {
-	t := time.Now()
-	return t.Weekday().String()
+func createMessage() string {
+	m := make([]byte, 0, 100)
+	m = append(b, "massanのへっぽこbotからお送りします\n"...)
+	m = append(b, sayDayInfo()...)
+	m = append(b, "\n"...)
+	m = append(b, sayWeek()...)
+	m = append(b, "...(σ･∀･)σゲッツ!!"...)
+	return string(b)
 }
 
-func setDayInfo() string {
+func sayDayInfo() string {
 	t := time.Now()
 	month := t.Month().String()
 	day := strconv.Itoa(t.Day())
 	return "Today is " + month + " " + day + "."
 }
 
-func messageContent() string {
+func sayWeek() string {
 	week := setWeekday()
 	switch week {
 	case "Monday":
@@ -58,6 +64,10 @@ func messageContent() string {
 		return "おやすみだよね〜"
 	}
 	return ""
+}
+func setWeekday() string {
+	t := time.Now()
+	return t.Weekday().String()
 }
 
 func postMessage() {
